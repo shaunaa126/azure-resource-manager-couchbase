@@ -41,12 +41,26 @@
       }
     },
     {
+      "name": "networksecuritygroups1",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('templateUrl'), 'networkSecurityGroups1.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {}
+      }
+    },
+    {
       "name": "vnet",
       "type": "Microsoft.Network/virtualNetworks",
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "Microsoft.Resources/deployments/networksecuritygroups"
+        "Microsoft.Resources/deployments/networksecuritygroups",
+        "Microsoft.Resources/deployments/networksecuritygroups1"
       ],
       "properties": {
         "addressSpace": {
@@ -61,6 +75,15 @@
               "addressPrefix": "10.0.0.0/16",
               "networkSecurityGroup": {
                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'networksecuritygroups')]"
+              }
+            }
+          },
+          {
+            "name": "subnet1",
+            "properties": {
+              "addressPrefix": "10.0.1.0/16",
+              "networkSecurityGroup": {
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'networksecuritygroups1')]"
               }
             }
           }
@@ -152,6 +175,32 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
+        }
+      }
+    },
+    {
+      "name": "bastion",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "dependsOn": [
+        "Microsoft.Network/virtualNetworks/vnet"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('templateUrl'), 'bastion.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "adminUsername": {
+            "value": "[parameters('adminUsername')]"
+          },
+          "adminPassword": {
+            "value": "[parameters('adminPassword')]"
+          },
+          "uniqueString": {
+            "value": "[variables('uniqueString')]"
+          }
         }
       }
     }

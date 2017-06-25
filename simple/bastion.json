@@ -1,0 +1,93 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "adminUsername": {
+      "type": "string"
+    },
+    "adminPassword": {
+      "type": "securestring"
+    },
+    "uniqueString": {
+      "type": "string"
+    },
+    "ubuntuOSVersion": {
+      "type": "string",
+      "defaultValue": "16.04-LTS",
+      "allowedValues": [
+        "16.04-LTS",
+        "14.04.4-LTS"
+      ],
+      "metadata": {
+        "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version. Allowed values are: 16.04-LTS, 14.04.4-LTS."
+      }
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "type": "Microsoft.Compute/virtualMachineScaleSets",
+      "name": "bastion",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2017-03-30",
+      "sku": {
+        "name": "Standard_A1",
+        "tier": "Standard",
+        "capacity": "1"
+      },
+      "properties": {
+        "overprovision": false,
+        "upgradePolicy": {
+          "mode": "Manual"
+        },
+        "virtualMachineProfile": {
+          "storageProfile": {
+            "osDisk": {
+              "createOption": "FromImage"
+            },
+            "imageReference": {
+              "publisher": "Canonical",
+              "offer": "UbuntuServer",
+              "sku": "[parameters('ubuntuOSVersion')]",
+              "version": "latest"
+            }
+          },
+          "osProfile": {
+            "computerNamePrefix": "vm",
+            "adminUsername": "[parameters('adminUsername')]",
+            "adminPassword": "[parameters('adminPassword')]"
+          },
+          "networkProfile": {
+            "networkInterfaceConfigurations": [
+              {
+                "name": "nic",
+                "properties": {
+                  "primary": "true",
+                  "ipConfigurations": [
+                    {
+                      "name": "ipconfig",
+                      "properties": {
+                        "subnet": {
+                          "id": "[concat(resourceId('Microsoft.Network/virtualNetworks/', 'vnet'), '/subnets/subnet1')]"
+                        },
+                        "publicipaddressconfiguration": {
+                          "name": "public",
+                          "properties": {
+                            "idleTimeoutInMinutes": 15,
+                            "dnsSettings": {
+                              "domainNameLabel": "[concat('bastion-', parameters('uniqueString'))]"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
