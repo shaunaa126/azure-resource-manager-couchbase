@@ -81,7 +81,7 @@
           {
             "name": "subnet1",
             "properties": {
-              "addressPrefix": "10.0.1.0/16",
+              "addressPrefix": "172.30.0.0/16",
               "networkSecurityGroup": {
                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'networksecuritygroups1')]"
               }
