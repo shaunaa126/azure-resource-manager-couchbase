@@ -40,20 +40,7 @@
             "name": "BackendPool1"
           }
         ],
-        "inboundNatPools": [
-          /*{
-            "name": "[variables('natPoolName')]",
-            "properties": {
-              "frontendIPConfiguration": {
-                "id": "[variables('frontEndIPConfigID')]"
-              },
-              "protocol": "tcp",
-              "frontendPortRangeStart": "[variables('natStartPort')]",
-              "frontendPortRangeEnd": "[variables('natEndPort')]",
-              "backendPort": "[variables('natBackendPort')]"
-            }
-          }*/
-        ],
+        "inboundNatPools": [],
         "loadBalancingRules": [
           {
             "name": "LBRule",

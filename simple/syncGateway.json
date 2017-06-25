@@ -78,11 +78,6 @@
                             "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/loadBalancers/', 'syncgatewaylb', '/backendAddressPools/', 'BackendPool1')]"
                           }
                         ],
-/*                        "loadBalancerInboundNatPools": [
-                          {
-                            "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/loadBalancers/', 'syncgatewaylb', '/inboundNatPools/', 'NatPool1')]"
-                          }
-                        ],*/
                         "publicipaddressconfiguration": {
                           "name": "public",
                           "properties": {

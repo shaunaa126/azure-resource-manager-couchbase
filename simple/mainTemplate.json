@@ -110,7 +110,6 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2016-02-01",
       "dependsOn": [
-        /*"Microsoft.Network/virtualNetworks/vnet"*/
         "Microsoft.Resources/deployments/syncgatewaylb"
       ],
       "properties": {
