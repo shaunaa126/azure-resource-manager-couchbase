@@ -81,6 +81,7 @@
             "properties": {
               "protocol": "Http",
               "port": 4984,
+              "requestPath": "/",
               "intervalInSeconds": 5,
               "numberOfProbes": 2
             }
