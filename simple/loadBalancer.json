@@ -24,6 +24,9 @@
       "name": "syncgatewaylb",
       "location": "[resourceGroup().location]",
       "apiVersion": "2017-04-01",
+      "dependsOn": [
+        "Microsoft.Network/publicIPAddresses/syncgatewaylbpip"
+      ],
       "properties": {
         "frontendIPConfigurations": [
           {
