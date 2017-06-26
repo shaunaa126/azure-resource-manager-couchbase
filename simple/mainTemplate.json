@@ -79,7 +79,7 @@
             }
           },
           {
-            "name": "subnet1",
+            "name": "subnet_bastion",
             "properties": {
               "addressPrefix": "10.0.2.0/28",
               "networkSecurityGroup": {
@@ -175,6 +175,9 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
+          "uniqueString": {
+            "value": "[variables('uniqueString')]"
+          }
         }
       }
     },
