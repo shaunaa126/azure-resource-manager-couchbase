@@ -41,13 +41,13 @@
       }
     },
     {
-      "name": "networksecuritygroups1",
+      "name": "networksecuritygroups_bastion",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2016-02-01",
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[concat(variables('templateUrl'), 'networkSecurityGroups1.json')]",
+          "uri": "[concat(variables('templateUrl'), 'networkSecurityGroups_Bastion.json')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {}
@@ -60,7 +60,7 @@
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "Microsoft.Resources/deployments/networksecuritygroups",
-        "Microsoft.Resources/deployments/networksecuritygroups1"
+        "Microsoft.Resources/deployments/networksecuritygroups_bastion"
       ],
       "properties": {
         "addressSpace": {
@@ -83,7 +83,7 @@
             "properties": {
               "addressPrefix": "10.0.2.0/28",
               "networkSecurityGroup": {
-                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'networksecuritygroups1')]"
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'networksecuritygroups_bastion')]"
               }
             }
           }
@@ -212,7 +212,11 @@
     },
     "syncGatewayAdminURL": {
       "type": "string",
-      "value": "[concat('http://vm0.syncgateway-', variables('uniqueString'), '.', resourceGroup().location, '.cloudapp.azure.com:4984')]"
+      "value": "[reference('syncgatewaylbpip').dnsSettings.fqdn]" 
+    },
+    "bastionURL": {
+      "type": "string",
+      "value": "[concat('vm0.bastion-', variables('uniqueString'), '.', resourceGroup().location, '.cloudapp.azure.com')]"
     }
   }
 }
