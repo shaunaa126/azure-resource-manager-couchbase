@@ -15,7 +15,7 @@
       "properties": {
         "publicIPAllocationMethod": "Static",
         "dnsSettings": {
-          "domainNameLabel": "[concat('cb-syncgateway-',resourceGroup().id)]"
+          "domainNameLabel": "[concat('cb-syncgateway-',resourceGroup().name)]"
         }
       }
     },
