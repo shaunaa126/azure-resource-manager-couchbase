@@ -86,6 +86,12 @@
                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'networksecuritygroups_bastion')]"
               }
             }
+          },
+          {
+            "name": "subnet_appgw",
+            "properties": {
+              "addressPrefix": "10.0.3.0/28"
+            }
           }
         ]
       }
@@ -133,7 +139,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2016-02-01",
       "dependsOn": [
-        "Microsoft.Resources/deployments/syncgatewaylb",
+        "Microsoft.Resources/deployments/syncgateway_appgw",
         "Microsoft.Network/virtualNetworks/vnet"
       ],
       "properties": {
@@ -165,13 +171,13 @@
       }
     },
     {
-      "name": "syncgatewaylb",
+      "name": "syncgateway_appgw",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2016-02-01",
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[concat(variables('templateUrl'), 'loadBalancer.json')]",
+          "uri": "[concat(variables('templateUrl'), 'appGateway.json')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {

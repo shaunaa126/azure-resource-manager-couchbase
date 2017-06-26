@@ -73,9 +73,9 @@
                         "subnet": {
                           "id": "[concat(resourceId('Microsoft.Network/virtualNetworks/', 'vnet'), '/subnets/subnet')]"
                         },
-                        "loadBalancerBackendAddressPools": [
+                        "ApplicationGatewayBackendAddressPools": [
                           {
-                            "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/loadBalancers/', 'syncgatewaylb', '/backendAddressPools/', 'BackendPool1')]"
+                            "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/applicationGateways/', 'syncgateway_appgw', '/backendAddressPools/', 'appGwBackendPool')]"
                           }
                         ],
                         "publicipaddressconfiguration": {
