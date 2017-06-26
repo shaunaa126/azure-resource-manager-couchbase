@@ -24,8 +24,7 @@
   "variables": {
     "templateUrl": "https://raw.githubusercontent.com/shaunaa126/azure-resource-manager-couchbase/master/simple/",
     "extensionUrl": "https://raw.githubusercontent.com/shaunaa126/azure-resource-manager-couchbase/master/extensions/",
-    "uniqueString": "[uniquestring(resourceGroup().id, deployment().name)]",
-    "publicIPAddressId": "[resourceId('Microsoft.Network/publicIPAddresses', 'syncgatewaylbpip')]"
+    "uniqueString": "[uniquestring(resourceGroup().id, deployment().name)]"
   },
   "resources": [
     {
@@ -214,7 +213,7 @@
     },
     "syncGatewayAdminURL": {
       "type": "string",
-      "value": "[reference(variables('publicIPAddressId')).DnsSettings.Fqdn]"
+      "value": "[concat('http://vm0.syncgateway-', variables('uniqueString'), '.', resourceGroup().location, '.cloudapp.azure.com:4984')]"
     },
     "bastionURL": {
       "type": "string",
