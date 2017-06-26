@@ -15,7 +15,7 @@
       "properties": {
         "publicIPAllocationMethod": "Static",
         "dnsSettings": {
-          "domainNameLabel": "couchbase-syncgateway"
+          "domainNameLabel": "[concat('cb-syncgateway-',resourceGroup().id)]"
         }
       }
     },
