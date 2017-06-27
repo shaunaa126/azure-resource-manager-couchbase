@@ -22,23 +22,5 @@
   },
   "appGatewayCertPassword": {
     "value": "REPLACE_PFXPASS"
-  },
-  "vaultResourceGroup": {
-    "value": "REPLACE_VAULTRG"
-  },
-  "vaultName": {
-    "value" : "REPLACE_VAULTNAME"
-  },
-  "certThumbPrint" : {
-    "value": "REPLACE_CERTPRINT"
-  },
-  "caCertThumbPrint" : {
-    "value": "REPLACE_CACERTPRINT"
-  },
-  "httpssecretUrlWithVersion": {
-    "value": "REPLACE_CERTURL"
-  },
-  "httpssecretCaUrlWithVersion": {
-    "value": "REPLACE_CACERTURL"
   }
 }
