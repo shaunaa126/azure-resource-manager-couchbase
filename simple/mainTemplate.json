@@ -19,6 +19,18 @@
     },
     "adminPassword": {
       "type": "securestring"
+    },
+    "appGatewayCertData": {
+        "type": "string",
+        "metadata": {
+            "description": "Base-64 encoded form of the .pfx file"
+        }
+    },
+    "appGatewayCertPassword": {
+        "type": "securestring",
+        "metadata": {
+            "description": "Password for .pfx certificate"
+        }
     }
   },
   "variables": {
@@ -186,6 +198,12 @@
         "parameters": {
           "uniqueString": {
             "value": "[variables('uniqueString')]"
+          },
+          "appGatewayCertData": {
+            "value": "[parameters('appGatewayCertData')]"
+          },
+          "appGatewayCertPassword": {
+            "value": "[parameters('appGatewayCertPassword')]"
           }
         }
       }

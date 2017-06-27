@@ -4,6 +4,12 @@
   "parameters": {
     "uniqueString": {
       "type": "string"
+    },
+    "appGatewayCertData": {
+        "type": "string"
+    },
+    "appGatewayCertPassword": {
+        "type": "securestring"
     }
   },
   "variables": {
@@ -33,6 +39,15 @@
           "tier": "Standard",
           "capacity": "2"
         },
+        "sslCertificates": [
+          {
+            "name": "appGwSslCert",
+            "properties": {
+              "data": "[parameters('appGatewayCertData')]",
+              "password": "[parameters('appGatewayCertPassword')]"
+            }
+          }
+        ],
         "gatewayIPConfigurations": [
           {
             "name": "appGwIpConfig",
@@ -86,8 +101,10 @@
               "FrontendPort": {
                 "Id": "[concat(variables('appGwID'), '/frontendPorts/appGwFrontendPort')]"
               },
-              "Protocol": "Http",
-              "SslCertificate": null
+              "Protocol": "Https",
+              "SslCertificate": {
+                "Id": "[concat(variables('appGwID'), '/sslCertificates/appGwSslCert')]"
+              }
             }
           }
         ],

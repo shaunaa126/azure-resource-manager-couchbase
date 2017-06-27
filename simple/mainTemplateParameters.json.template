@@ -1,0 +1,44 @@
+{
+  "serverNodeCount": {
+    "value": 3
+  },
+  "serverDiskSize": {
+     "value": 32
+  },
+  "syncGatewayNodeCount": {
+    "value": 2
+  },
+  "vmSize": {
+    "value": "Standard_DS3_v2"
+  },
+  "adminUsername": {
+    "value": "couchbase"
+  },
+  "adminPassword": {
+    "value": "foo123!"
+  },
+  "appGatewayCertData": {
+    "value": "REPLACE_BASEENCODEDPFX"
+  },
+  "appGatewayCertPassword": {
+    "value": "REPLACE_PFXPASS"
+  },
+  "vaultResourceGroup": {
+    "value": "REPLACE_VAULTRG"
+  },
+  "vaultName": {
+    "value" : "REPLACE_VAULTNAME"
+  },
+  "certThumbPrint" : {
+    "value": "REPLACE_CERTPRINT"
+  },
+  "caCertThumbPrint" : {
+    "value": "REPLACE_CACERTPRINT"
+  },
+  "httpssecretUrlWithVersion": {
+    "value": "REPLACE_CERTURL"
+  },
+  "httpssecretCaUrlWithVersion": {
+    "value": "REPLACE_CACERTURL"
+  }
+}
