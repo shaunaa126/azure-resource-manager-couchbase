@@ -21,16 +21,58 @@
       "type": "securestring"
     },
     "appGatewayCertData": {
-        "type": "string",
-        "metadata": {
-            "description": "Base-64 encoded form of the .pfx file"
-        }
+      "type": "string",
+      "metadata": {
+          "description": "Base-64 encoded form of the .pfx file"
+      }
     },
     "appGatewayCertPassword": {
-        "type": "securestring",
-        "metadata": {
-            "description": "Password for .pfx certificate"
-        }
+      "type": "securestring",
+      "metadata": {
+          "description": "Password for .pfx certificate"
+      }
+    },
+    "vaultName": {
+      "type": "string",
+      "metadata": {
+        "description": "The Azure Key vault where SSL certificates are stored"
+      }
+    },
+    "vaultResourceGroup": {
+      "type": "string",
+      "metadata": {
+        "description": "Resource Group of the key vault"
+      }
+    },
+    "httpssecretUrlWithVersion": {
+      "type": "string",
+      "metadata": {
+        "description": "full Key Vault Id to the secret that stores the SSL cert"
+      }
+    },
+    "httpssecretCaUrlWithVersion": {
+      "type": "string",
+      "metadata": {
+        "description": "full Key Vault Id to the secret that stores the CA cert"
+      }
+    },
+    "certThumbPrint": {
+      "type": "string",
+      "metadata": {
+        "description": "fingerprint of the SSL cert"
+      }
+    },
+    "caCertThumbPrint": {
+      "type": "string",
+      "metadata": {
+        "description": "fingerprint of the CA cert"
+      }
+    },
+    "syncGatewayCertData": {
+      "type": "string",
+      "metadata": {
+          "description": "Base-64 encoded form of the public certificate file"
+      }
     }
   },
   "variables": {
@@ -178,6 +220,24 @@
           },
           "uniqueString": {
             "value": "[variables('uniqueString')]"
+          },
+          "vaultName": {
+            "value": "[parameters('vaultName')]"
+          },
+          "vaultResourceGroup": {
+            "value": "[parameters('vaultResourceGroup')]"
+          },
+          "httpssecretUrlWithVersion": {
+            "value": "[parameters('httpssecretUrlWithVersion')]"
+          },
+          "httpssecretCaUrlWithVersion": {
+            "value": "[parameters('httpssecretCaUrlWithVersion')]"
+          },
+          "certThumbPrint": {
+            "value": "[parameters('certThumbPrint')]"
+          },
+          "caCertThumbPrint": {
+            "value": "[parameters('caCertThumbPrint')]"
           }
         }
       }
@@ -204,6 +264,9 @@
           },
           "appGatewayCertPassword": {
             "value": "[parameters('appGatewayCertPassword')]"
+          },
+          "syncGatewayCertData": {
+            "value": "[parameters('syncGatewayCertData')]"
           }
         }
       }

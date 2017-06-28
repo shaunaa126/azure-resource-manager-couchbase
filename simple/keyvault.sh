@@ -104,6 +104,16 @@ EOF
     echo Secret ID is $id
 }
 
+outputcert()
+{
+    local cert=$1
+
+    echo Outputing Base64 encoded $cert
+    cat $cert | base64 >> tmp.txt    
+    encodedstring=$( cat tmp.txt )
+    rm -f tmp.txt
+}
+
 vaultname=$1
 rgname=$2
 location=$3
@@ -123,6 +133,9 @@ createkeyvault
 convertcert $certfile $keyfile $certpfxfile $pwd
 certprint=$fingerprint
 echo $certpfxfile fingerprint is $fingerprint
+outputcert $certpfxfile
+certstring=$encodedstring
+echo $certpfxfile encoded string is $certstring
 # storing pfx in keyvault
 echo Storing $certpfxfile as $secretname
 storesecret $certpfxfile $secretname
@@ -133,8 +146,11 @@ if [ ! -z $cacertfile ]
 then
     # converting CA cert to pfx
     convertcacert $cacertfile $cacertpfxfile $pwd
-    echo $cacertpfxfile fingerprint is $fingerprint
     cacertprint=$fingerprint
+    echo $cacertpfxfile fingerprint is $fingerprint
+    outputcert $cacertpfxfile
+    cacertstring=$encodedstring
+    echo $cacertpfxfile encoded string is $cacertstring
     # storing pfx in key vault
     echo Storing $cacertpfxfile as $casecretname
     storesecret $cacertpfxfile $casecretname   
@@ -152,5 +168,6 @@ sed -i -e 's/REPLACE_CERTPRINT/'$certprint'/g' ./mainTemplateParameters.json
 sed -i -e 's/REPLACE_CACERTPRINT/'$cacertprint'/g' ./mainTemplateParameters.json
 sed -i -e 's/REPLACE_VAULTNAME/'$vaultname'/g' ./mainTemplateParameters.json
 sed -i -e 's/REPLACE_VAULTRG/'$rgname'/g' ./mainTemplateParameters.json
+sed -i -e 's/REPLACE_BASEENCODEDCERT'$certstring'/g' ./mainTemplateParameters.json
 
 echo Done

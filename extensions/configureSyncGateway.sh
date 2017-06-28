@@ -6,18 +6,24 @@ adminUsername=$1
 adminPassword=$2
 uniqueString=$3
 location=$4
+certprint=$5
 
 echo "Using the settings:"
 echo adminUsername \'$adminUsername\'
 echo adminPassword \'$adminPassword\'
 echo uniqueString \'$uniqueString\'
 echo location \'$location\'
+echo certprint \'$certprint\'
 
 serverDNS='vm0.server-'$uniqueString'.'$location'.cloudapp.azure.com'
+sslcertfilename=$certprint'.crt'
+sslkeyfilename=$certprint'.prv'
 
 file="/home/sync_gateway/sync_gateway.json"
 echo '
 {
+  "SSLCert": "/var/lib/waagent/'$sslcertfilename'",
+  "SSLKey": "/var/lib/waagent/'$sslkeyfilename'",
   "interface": "0.0.0.0:4984",
   "adminInterface": "0.0.0.0:4985",
   "log": ["*"],

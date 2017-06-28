@@ -17,13 +17,12 @@ convertcert()
 
     echo Creating PFX $pfxfile
     openssl pkcs12 -export -out $pfxfile -inkey $key -in $cert -password pass:$pass 2> /dev/null
-    cat $pfxfile | base64 >> tmp.txt
     if [ $? -eq 1 ]
     then
         echo problem converting $key and $cert to pfx
         exit 1
-    fi    
-    pfxencode=$( cat tmp.txt )
+    fi
+    
     fingerprint=$(openssl x509 -in $cert -noout -fingerprint | cut -d= -f2 | sed 's/://g' )
 }
 
@@ -35,14 +34,23 @@ convertcacert()
 
     echo Creating PFX $pfxfile
     openssl pkcs12 -export -out $pfxfile -nokeys -in $cert -password pass:$pass 2> /dev/null
-    cat $pfxfile | base64 >> tmp.txt
     if [ $? -eq 1 ]
     then
         echo problem converting $cert to pfx
         exit 1
-    fi    
-    pfxencode=$( cat tmp.txt )
+    fi
+
     fingerprint=$(openssl x509 -in $cert -noout -fingerprint | cut -d= -f2 | sed 's/://g' )
+}
+
+outputcert()
+{
+    local cert=$1
+
+    echo Outputing Base64 encoded $cert
+    cat $cert | base64 >> tmp.txt    
+    encodedstring=$( cat tmp.txt )
+    rm -f tmp.txt
 }
 
 pwd=$1
@@ -55,22 +63,23 @@ cacertpfxfile=${cacertfile%.*crt}.pfx
 
 # converting SSL cert to pfx
 convertcert $certfile $keyfile $certpfxfile $pwd
-certstring=$pfxencode
 certprint=$fingerprint
+echo $certpfxfile fingerprint is $fingerprint
+outputcert $certpfxfile
+certstring=$encodedstring
 echo $certpfxfile encoded string is $certstring
 rm -f $certpfxfile
-rm -f tmp.txt
 
 if [ ! -z $cacertfile ]
 then
     # converting CA cert to pfx
     convertcacert $cacertfile $cacertpfxfile $pwd
-    echo $cacertpfxfile fingerprint is $fingerprint
-    cacertstring=$pfxencode
     cacertprint=$fingerprint
+    echo $cacertpfxfile fingerprint is $fingerprint
+    outputcert $cacertpfxfile
+    cacertstring=$encodedstring
     echo $cacertpfxfile encoded string is $cacertstring
     rm -f $cacertpfxfile
-    rm -f tmp.txt
 fi
 
 # make sure pattern substitution succeeds

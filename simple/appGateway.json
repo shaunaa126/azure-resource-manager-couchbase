@@ -6,10 +6,13 @@
       "type": "string"
     },
     "appGatewayCertData": {
-        "type": "string"
+      "type": "string"
     },
     "appGatewayCertPassword": {
-        "type": "securestring"
+      "type": "securestring"
+    },
+    "syncGatewayCertData": {
+      "type": "string"
     }
   },
   "variables": {
@@ -39,6 +42,14 @@
           "tier": "Standard",
           "capacity": "2"
         },
+       "authenticationCertificates": [
+          {
+            "name": "syncGwSslCert",
+            "properties": {
+              "data": "[parameters('syncGatewayCertData')]"
+            }
+          }
+        ],
         "sslCertificates": [
           {
             "name": "appGwSslCert",
@@ -86,8 +97,13 @@
             "name": "appGwBackendHttpSettings",
             "properties": {
               "Port": 4984,
-              "Protocol": "Http",
-              "CookieBasedAffinity": "Enabled"
+              "Protocol": "Https",
+              "CookieBasedAffinity": "Enabled",
+              "authenticationCertificates": [
+                {
+                  "id": "[concat(variables('appGwID'), '/authenticationCertificates/syncGwSslCert')]"
+                }
+              ]
             }
           }
         ],
