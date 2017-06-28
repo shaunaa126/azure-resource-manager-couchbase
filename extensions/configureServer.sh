@@ -24,7 +24,7 @@ nodePublicDNS='vm'$nodeIndex'.server-'$uniqueString'.'$location'.cloudapp.azure.
 
 echo "Adding an entry to /etc/hosts to simulate split brain DNS"
 echo "" >> /etc/hosts
-echo "Simulate split brain DNS for Couchbase" >> /etc/hosts
+echo "# Simulate split brain DNS for Couchbase" >> /etc/hosts
 echo "127.0.0.1 $nodePublicDNS" >> /etc/hosts
 echo "" >> /etc/hosts
 
@@ -53,6 +53,15 @@ then
     --cluster-username=$adminUsername \
     --cluster-password=$adminPassword \
     --services=data,index,query,fts
+
+    echo "Running couchbase-cli bucket-create"
+  ./couchbase-cli bucket-create \
+    --cluster=$nodePublicDNS \
+    --user=$adminUsername \
+    --pass=$adminPassword \
+    --bucket=sync_gateway \
+    --bucket-type=couchbase \
+    --bucket-ramsize=$dataRAM
 else
   echo "Running couchbase-cli server-add"
   output=""
