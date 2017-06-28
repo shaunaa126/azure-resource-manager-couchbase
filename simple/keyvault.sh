@@ -159,7 +159,7 @@ then
 fi
 
 # make sure pattern substitution succeeds
-cp ./mainTemplateParameters.json.template ./mainTemplateParameters.json
+# cp ./mainTemplateParameters.json.template ./mainTemplateParameters.json
 
 # update parameters file 
 sed -i -e 's|REPLACE_CERTURL|'$certid'|g' ./mainTemplateParameters.json
@@ -168,6 +168,6 @@ sed -i -e 's/REPLACE_CERTPRINT/'$certprint'/g' ./mainTemplateParameters.json
 sed -i -e 's/REPLACE_CACERTPRINT/'$cacertprint'/g' ./mainTemplateParameters.json
 sed -i -e 's/REPLACE_VAULTNAME/'$vaultname'/g' ./mainTemplateParameters.json
 sed -i -e 's/REPLACE_VAULTRG/'$rgname'/g' ./mainTemplateParameters.json
-sed -i -e 's/REPLACE_BASEENCODEDCERT'$certstring'/g' ./mainTemplateParameters.json
+sed -i -e 's|REPLACE_BASEENCODEDCERT|'$certstring'/g' ./mainTemplateParameters.json
 
 echo Done
