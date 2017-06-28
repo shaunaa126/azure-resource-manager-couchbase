@@ -41,6 +41,7 @@ echo '
 chmod 755 ${file}
 chown couchbase ${file}
 chgrp couchbase ${file}
+chmod -R 755 /var/lib/waagent
 
 # Need to restart to load the changes
 service sync_gateway stop
