@@ -12,7 +12,7 @@ SYNCGW_KEY=$9
 
 # Generate and insert SSL keys
 ./insertcert.sh $APPGW_PASSWORD $APPGW_CERT $APPGW_KEY
-./keyvault.sh 'couchbase-keyvault1' $RESOURCE_GROUP $REGION $KEYVAULT_SECRET $SYNCGW_PASSWORD $SYNCGW_CERT $SYNCGW_KEY
+./keyvault.sh 'couchbasekeyvault1' $RESOURCE_GROUP $REGION $KEYVAULT_SECRET $SYNCGW_PASSWORD $SYNCGW_CERT $SYNCGW_KEY
 
 # Azure CLI 1.0 commands
 azure group create $RESOURCE_GROUP $REGION
