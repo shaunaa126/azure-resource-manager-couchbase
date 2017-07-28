@@ -1,0 +1,29 @@
+config: 
+  phases: 
+    - 
+      arrivalRate: 20
+      duration: 60
+    - 
+      arrivalRate: 50
+      duration: 600
+  processor: ./my-functions.js
+  target: "https://f3f50264-00f4-4d92-9a6b-01e123456ebb.cloudapp.net:4984/database"
+scenarios: 
+  - 
+    flow: 
+      - 
+        function: generateRandomData
+      - 
+        put: 
+          json: 
+            id: "{{ id }}"
+            email: "{{ email }}"
+            name: "{{ name }}"
+            password: "{{ password }}"
+          url: "/{{ id }}"
+          headers:
+           Content-Type: "application/json"
+      - 
+        log: "Sent a PUT request to {{ target }}/{{id}} with values {{ id }}, {{ name }}, {{ email }}, {{ password }}"
+    name: "Create a document"
+
